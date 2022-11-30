@@ -4,6 +4,9 @@ const route = (event) => {
   window.history.pushState({}, "", event.target.href);
   handleLocation();
 };
+// const githack_version = "71878f3882ba55d49099286b2c0094c8d96efd24";
+const githack_version = "main";
+const githack = "https://rawcdn.githack.com/baysao/baysaost/" + githack_version;
 
 const routes = {
   404: "/pages/404.html",
@@ -11,8 +14,7 @@ const routes = {
   "#about": "/pages/about.html",
   "#lorem": "/pages/lorem.html",
   "#test": "/pages/test.html",
-  "#test1":
-    "https://rawcdn.githack.com/baysao/baysaost/28dfde634044fafc83dc471e5f7df782e8988b44/test1.dot",
+  "#test1": "/pages/test1.dot",
   "#test11": "/pages/test1.dot",
 };
 
@@ -22,7 +24,7 @@ const def = {
 const handleLocation = async () => {
   const path = window.location.pathname;
   const pathHash = window.location.hash;
-  const route = routes[pathHash] || routes[path] || routes[404];
+  const route = githack + routes[pathHash] || routes[path] || routes[404];
   console.log(route);
   let html = await fetch(route).then((data) => data.text());
   if (/\.dot/.test(route)) {
