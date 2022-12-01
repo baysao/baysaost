@@ -1,10 +1,35 @@
 const githack_version = "main";
 const githack = "https://rawcdn.githack.com/baysao/baysaost/" + githack_version;
-
 // handleLocation();
 const def = {
   header: "My Header",
 };
+async function _handler_index() {
+  let _route = "/pages/menu.dot";
+  const _html = await fetch(_route).then((data) => data.text());
+  const _json = await fetch(_route.replace(/\.dot$/, ".json")).then((data) =>
+    data.json()
+  );
+  var _tmpl = doT.template(_html, undefined, def);
+  let _out = _tmpl(_json);
+  console.log(_out);
+  document.getElementById("main-nav").innerHTML = _out;
+}
+async function _handler_page(params, state, url) {
+  console.log(params);
+  console.log(state);
+  console.log(url);
+  //    return "About";
+  let _route = githack + "/pages/" + url + ".dot";
+  const _html = await fetch(_route).then((data) => data.text());
+  const _json = await fetch(_route.replace(/\.dot$/, ".json")).then((data) =>
+    data.json()
+  );
+
+  console.log({ _html, _json });
+  var _tmpl = doT.template(_html, undefined, def);
+  return _tmpl(_json);
+}
 
 const route = Rlite(notFound, {
   // Default route
@@ -15,17 +40,7 @@ const route = Rlite(notFound, {
   about: function () {
     return "About";
   },
-  test1: async function () {
-    //    return "About";
-    let route = githack + "/pages/test1.dot";
-    const _html = await fetch(route).then((data) => data.text());
-    const _json = await fetch(route.replace(/\.dot$/, ".json")).then((data) =>
-      data.json()
-    );
-
-    var _tmpl = doT.template(_html, undefined, def);
-    return _tmpl(_json);
-  },
+  test1: _handler_page,
 
   // // #sent?to=john -> r.params.to will equal 'john'
   // sent: function ({ to }) {
@@ -55,6 +70,9 @@ async function processHash() {
   let html = await route(hash.slice(1));
   document.getElementById("main-page").innerHTML = html;
 }
+_handler_index();
+
+//});
 
 window.addEventListener("hashchange", processHash);
 processHash();
