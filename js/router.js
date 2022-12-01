@@ -9,13 +9,9 @@ async function _handler_index() {
   );
   var _tmpl = doT.template(_html, undefined, def);
   let _out = _tmpl(_json);
-  console.log(_out);
   document.getElementById("main-nav").innerHTML = _out;
 }
 async function _handler_page(params, state, url) {
-  console.log(params);
-  console.log(state);
-  console.log(url);
   //    return "About";
   let _route = githack + "/pages/" + url + ".dot";
   const _html = await fetch(_route).then((data) => data.text());
@@ -23,7 +19,6 @@ async function _handler_page(params, state, url) {
     data.json()
   );
 
-  console.log({ _html, _json });
   var _tmpl = doT.template(_html, undefined, def);
   return _tmpl(_json);
 }
