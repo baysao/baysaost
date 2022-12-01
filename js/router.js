@@ -8,8 +8,7 @@ async function _handler_index() {
     data.json()
   );
   var _tmpl = doT.template(_html, undefined, def);
-  let _out = _tmpl(_json);
-  document.getElementById("main-nav").innerHTML = _out;
+  document.getElementById("main-nav").innerHTML = _tmpl(_json);
 }
 async function _handler_page(params, state, url) {
   //    return "About";
@@ -33,6 +32,10 @@ const route = Rlite(notFound, {
     return "About";
   },
   test1: _handler_page,
+  "post/:name": async function (params, state, url) {
+    console.log({ params, state, url });
+    return await _handler_page(params, state, params.name);
+  },
 
   // // #sent?to=john -> r.params.to will equal 'john'
   // sent: function ({ to }) {
