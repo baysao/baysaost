@@ -5,7 +5,7 @@ const def = {
   header: "My Header",
 };
 async function _handler_index() {
-  let _route = "/pages/menu.dot";
+  let _route = githack + "/pages/menu.dot";
   const _html = await fetch(_route).then((data) => data.text());
   const _json = await fetch(_route.replace(/\.dot$/, ".json")).then((data) =>
     data.json()
