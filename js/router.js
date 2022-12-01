@@ -1,5 +1,5 @@
 const githack_version = "main";
-const githack = "https:rawcdn.githack.com/baysao/baysaost/" + githack_version;
+const githack = "https://rawcdn.githack.com/baysao/baysaost/" + githack_version;
 
 // handleLocation();
 const def = {
