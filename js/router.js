@@ -24,7 +24,10 @@ const def = {
 const handleLocation = async () => {
   const path = window.location.pathname;
   const pathHash = window.location.hash;
-  const route = githack + routes[pathHash] || routes[path] || routes[404];
+  console.log(pathHash);
+  let route = "";
+  if (pathHash) route = githack + routes[pathHash] || routes[404];
+  else route = githack + routes[path] || routes[404];
   console.log(route);
   let html = await fetch(route).then((data) => data.text());
   if (/\.dot/.test(route)) {
