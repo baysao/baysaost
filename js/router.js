@@ -10,6 +10,23 @@ async function _handler_index() {
   var _tmpl = doT.template(_html, undefined, def);
   document.getElementById("main-nav").innerHTML = _tmpl(_json);
 }
+async function _handler_post(params, state, url) {
+  console.log({ params, state, url });
+  //    return "About";
+  let _post_data = githack + "/posts/" + url;
+  if (/\.dot/.test(url)) {
+    let _post_tmpl = githack + "/post.dot";
+    let _post_data = githack + "/posts/" + url;
+    const _html = await fetch(_post_tmpl).then((data) => data.text());
+    const _json = await fetch(_post_data.replace(/\.dot$/, ".json")).then(
+      (data) => data.json()
+    );
+
+    var _tmpl = doT.template(_html, undefined, def);
+    return _tmpl(_json);
+  }
+  return await fetch(_post_data).then((data) => data.text());
+}
 async function _handler_page(params, state, url) {
   //    return "About";
   let _route = githack + "/pages/" + url + ".dot";
@@ -34,7 +51,7 @@ const route = Rlite(notFound, {
   test1: _handler_page,
   "post/:name": async function (params, state, url) {
     console.log({ params, state, url });
-    return await _handler_page(params, state, params.name);
+    return await _handler_post(params, state, params.name);
   },
 
   // // #sent?to=john -> r.params.to will equal 'john'
