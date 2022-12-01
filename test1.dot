@@ -1,3 +1,0 @@
- <h2>Here is the page using a header template</h2>
-      {{#def.header}}
-      {{=it.name}}
