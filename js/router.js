@@ -13,9 +13,9 @@ async function _handler_index() {
 async function _handler_post(params, state, url) {
   console.log({ params, state, url });
   //    return "About";
-  let _post_data = githack + "/posts/" + url + "?min=1";
+  let _post_data = githack + "/posts/" + url;
   if (/\.dot/.test(url)) {
-    let _post_tmpl = githack + "/post.dot?min=1";
+    let _post_tmpl = githack + "/post.dot";
     const _html = await fetch(_post_tmpl).then((data) => data.text());
     const _json = await fetch(_post_data.replace(/\.dot$/, ".json")).then(
       (data) => data.json()
@@ -28,7 +28,7 @@ async function _handler_post(params, state, url) {
 }
 async function _handler_page(params, state, url) {
   //    return "About";
-  let _route = githack + "/pages/" + url + ".dot?min=1";
+  let _route = githack + "/pages/" + url + ".dot";
   const _html = await fetch(_route).then((data) => data.text());
   const _json = await fetch(_route.replace(/\.dot$/, ".json")).then((data) =>
     data.json()
